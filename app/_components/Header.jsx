@@ -10,7 +10,7 @@ const Header = () => {
             <Image src={"./logo.svg"} alt='Logo' height={40} width={40} />
             <h1 className='font-bold text-2xl'>StockMaster</h1>  
           </div>  
-          <div className='flex gap-7'>
+          <div className='flex gap-7 max-[767px]:hidden'>
                 <Link href={""}>Home</Link>
                 <Link href={""}>Analytics</Link>
                 <Link href={""}>Users</Link>

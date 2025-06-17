@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 const PriceItems = ({ element }) => {
   return (
     <div>
-      <Card className={"h-[350px] flex flex-col justify-around"}>
+      <Card className={"h-[390px] flex flex-col justify-around"}>
         <CardHeader>
           <CardTitle className={'text-2xl text-black'}>{element.title}</CardTitle>
           <CardDescription className={"text-4xl text-black"}>{element.Price}</CardDescription>

@@ -4,7 +4,7 @@ import FeatureItems from './FeatureItems'
 
 const Features = () => {
   return (
-    <div className='bg-gray-300 mb-5'>
+    <div className='bg-gray-300 mb-5 '>
         <div className='text-center p-10'>
             <h2 className='text-5xl font-medium font-serif pb-4'>Powerful Features</h2>
             <p className='text-xl text-gray-500 font-semibold'>Everything you need to manage your inventory efficiently</p>

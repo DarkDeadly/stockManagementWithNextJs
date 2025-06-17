@@ -7,7 +7,7 @@ import Prices from "./_components/Prices";
 
 export default function Home() {
   return (
-    <div >
+    <div className="w-full overflow-x-hidden">
       <Header/>
       <Hero/>
       <Features/>

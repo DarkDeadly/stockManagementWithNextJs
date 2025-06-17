@@ -12,13 +12,13 @@ const Footer = () => {
         </div>
         <p className="text-gray-400">Streamline your inventory management with powerful tools and insights.</p>
       </div>
-      <div className="flex flex-col gap-3 text-gray-500">
+      <div className="flex flex-col gap-3 text-gray-500 max-[458px]:hidden">
         <h3 className="text-white text-lg font-bold cursor-pointer">Product</h3>
         <p className="hover:text-white cursor-pointer">Features</p>
         <p className="hover:text-white cursor-pointer">Pricing</p>
         <p className="hover:text-white cursor-pointer">Integrations</p>
       </div>
-       <div className="flex flex-col gap-3 text-gray-500">
+       <div className="flex flex-col gap-3 text-gray-500 max-[458px]:hidden">
         <h3 className="text-white text-lg font-bold cursor-pointer">Company</h3>
         <p className="hover:text-white cursor-pointer">About</p>
         <p className="hover:text-white cursor-pointer">Blog</p>
