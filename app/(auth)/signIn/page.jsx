@@ -1,10 +1,12 @@
-import { LucideAlignStartVertical } from 'lucide-react'
+"use client"
+
 import React from 'react'
 import AuthAnnouncer from './_component/AuthAnnouncer'
 import Image from 'next/image'
 import SignInForm from './_component/SignInForm'
 
 const SignIn = () => {
+   
   return (
     <div className='flex '>
       <AuthAnnouncer/>
@@ -16,7 +18,7 @@ const SignIn = () => {
                 </div>
                 <p className='my-5 text-gray-800 font-medium text-xl max-[524px]:hidden'>Professional Stock Management Platform</p>
             </div>
-           <SignInForm/>
+           <SignInForm />
         </div>
     </div>
   )
