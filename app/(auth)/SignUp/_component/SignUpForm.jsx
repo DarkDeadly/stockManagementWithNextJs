@@ -10,7 +10,7 @@ const SignUpForm = () => {
       <h2 className="text-center font-bold text-2xl py-5">Welcome To StockMaster</h2>
       <form action="" className="flex flex-col gap-3  p-5">
          <Label htmlFor="username" className={"text-xl"}>
-          Username
+          Username :
         </Label>
         <Input
           type="text"
@@ -19,7 +19,7 @@ const SignUpForm = () => {
           className={"p-5 placeholder:text-md"}
         />
         <Label htmlFor="email" className={"text-xl"}>
-          Email
+          Email :
         </Label>
         <Input
           type="email"
@@ -28,7 +28,7 @@ const SignUpForm = () => {
           className={"p-5 placeholder:text-md"}
         />
         <Label htmlFor="password" className={"text-xl"}>
-          Password
+          Password :
         </Label>
         <Input
           type="password"
@@ -37,7 +37,7 @@ const SignUpForm = () => {
           className={"p-5 text-xl placeholder:text-md"}
         />
         <Label htmlFor="password" className={"text-xl"}>
-          Confirm Password
+          Confirm Password :
         </Label>
         <Input
           type="password"
