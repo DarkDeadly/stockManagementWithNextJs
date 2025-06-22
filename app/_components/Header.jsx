@@ -34,10 +34,10 @@ const Header = () => {
           <Link href={""}>Analytics</Link>
           <Link href={""}>Users</Link>
           <Link href={""}>Products</Link>
-          <Button className="cursor-pointer px-5" variant="outline">
+          <Button className="cursor-pointer px-5" variant="outline" onClick ={() => router.push("./signIn")}>
             Login
           </Button>
-          <Button className="cursor-pointer px-5">Get Started</Button>
+          <Button className="cursor-pointer px-5" onClick ={() => router.push("./SignUp")}>Get Started</Button>
         </div>
 
         {/* Hamburger Menu Icon */}
