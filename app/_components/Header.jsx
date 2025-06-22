@@ -4,14 +4,22 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, {  useState } from "react";
 
 const Header = () => {
   const [Toggle, setToggle] = useState(false);
   
+
+
+  const router = useRouter()
+
+
+
   const HandleToggleMenu = () => {
     setToggle(!Toggle);
   };
+  
   return (
     <div className="sticky top-0 z-50 bg-white border-b-2 border-gray-300 w-full">
       <div className="flex items-center justify-between p-5">
@@ -46,10 +54,10 @@ const Header = () => {
           <Link href={""}>Products</Link>
           </div>
         <div>
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full" onClick ={() => router.push("./signIn")}>
             Login
           </Button>
-          <Button className="w-full">Get Started</Button>
+          <Button className="w-full"  onClick ={() => router.push("./SignUp")}>Get Started</Button>
         </div>
         </div>
       )}

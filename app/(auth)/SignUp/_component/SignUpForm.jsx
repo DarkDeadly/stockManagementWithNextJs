@@ -6,7 +6,11 @@ import { Label } from '@/components/ui/label'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { validateEmail , PasswordVerificaiton, PasswordMatching} from '@/lib/utils'
-
+import {createUserWithEmailAndPassword} from "firebase/auth"
+import toast from 'react-hot-toast'
+import { Loader2Icon } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import {auth} from '@/lib/config/db'
 const SignUpForm = () => {
   const [SignUpForm, setSignUpForm] = useState({
     username: '',
@@ -18,6 +22,14 @@ const SignUpForm = () => {
   const [emailError, setEmailError] = useState('')
   const [PasswordError, setPasswordError] = useState()
   const [PasswordMatchings, setPasswordMatching] = useState("")
+  const [Loading, setLoading] = useState(false)
+
+
+  const router = useRouter()
+
+
+
+
 
 const handleForm = (e) => {
   const { name, value } = e.target;
@@ -43,11 +55,31 @@ const handleForm = (e) => {
     setPasswordMatching(matchResult === true ? '' : matchResult); 
   }
 };
-
-  const handleSubmit = (e) => {
+const handleRouter = () => {
+        router.push("./signIn")
+    }
+  const handleSubmit = async(e) => {
     e.preventDefault()
-   
-
+    const matchResult = PasswordMatching(SignUpForm.password, SignUpForm.confirmpassword); 
+    const validationResult = validateEmail(SignUpForm.email);
+    const passwordValidation = PasswordVerificaiton(SignUpForm.password)
+    
+    try {
+    if (matchResult && validationResult && passwordValidation) {
+    setLoading(true)
+    const registeredCredential = await createUserWithEmailAndPassword(auth , SignUpForm.email , SignUpForm.password)
+    if (registeredCredential) {
+      toast.success("Successfully registered")
+      setLoading(false)
+      router.push('./signIn')
+    }else {
+      toast.error("Failed to register")
+    }
+    
+    }
+    } catch (error) {
+      console.error(error)
+    }
    
   }
 
@@ -111,22 +143,13 @@ const handleForm = (e) => {
           onChange={handleForm}
         />
         {PasswordMatchings && <p className='text-red-500 font-medium'>{PasswordMatchings}</p>}
-        <Button className={"p-6 text-center text-lg bg-[#2563EB] cursor-pointer"} type = 'submit'>Sign Up</Button>
+        <Button className={"p-6 text-center text-lg bg-[#2563EB] cursor-pointer"} type = 'submit'>{Loading && <Loader2Icon className='animate-spin'/>}Sign Up</Button>
 
-        <div className="flex items-center text-center">
-          <hr className="flex-grow border-t border-gray-300" />
-          <span className="px-4 text-gray-500">or you can continue with</span>
-          <hr className="flex-grow border-t border-gray-300" />
-        </div>
-        
-        <Button className={"p-6 text-lg bg-[#2563EB] cursor-pointer"}>
-          <Image src={"./google.svg"} alt="Google" height={20} width={20} className="cursor-pointer" />
-          Continue with Google
-        </Button>
+      
 
         <p className="text-center text-lg max-[524px]:text-[15px]">
           You have an account?{' '}
-          <span className="text-[#2563EB] underline cursor-pointer hover:text-purple-500">
+          <span className="text-[#2563EB] underline cursor-pointer hover:text-purple-500" onClick={handleRouter}>
             Sign In
           </span>
         </p>
