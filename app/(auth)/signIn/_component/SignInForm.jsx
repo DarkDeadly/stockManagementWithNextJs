@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { auth, provider } from "@/lib/config/db";
+import { AddUser } from "@/lib/DatabasesServices/databaseApis";
 import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
@@ -62,8 +63,12 @@ const SignInForm = () => {
       const GoogleSign = await signInWithPopup(auth, provider);
       const credential = GoogleAuthProvider.credentialFromResult(GoogleSign);
       const token = credential.accessToken;
-      toast.success("Signed in with Google!");
+     if (GoogleSign) {
+      const GoogleData = GoogleSign.user
+       AddUser(GoogleData.displayName , GoogleData.email , "user" ,GoogleData.photoURL)
+       toast.success("Signed in with Google!");
       setLoadingGoogle(false)
+     }
     } catch (error) {
       console.log(error.code);
       const errorCode = error.code;

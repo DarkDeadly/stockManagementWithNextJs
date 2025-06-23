@@ -11,6 +11,7 @@ import toast from 'react-hot-toast'
 import { Loader2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import {auth} from '@/lib/config/db'
+import { AddUser } from '@/lib/DatabasesServices/databaseApis'
 const SignUpForm = () => {
   const [SignUpForm, setSignUpForm] = useState({
     username: '',
@@ -69,6 +70,7 @@ const handleRouter = () => {
     setLoading(true)
     const registeredCredential = await createUserWithEmailAndPassword(auth , SignUpForm.email , SignUpForm.password)
     if (registeredCredential) {
+      AddUser(SignUpForm.username ,SignUpForm.email ,  )
       toast.success("Successfully registered")
       setLoading(false)
       router.push('./signIn')
