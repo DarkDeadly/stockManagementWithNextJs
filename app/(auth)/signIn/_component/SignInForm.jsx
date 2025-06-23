@@ -49,6 +49,8 @@ const SignInForm = () => {
       );
       if (SigninProcess) {
         toast.success("Successfully Logged In");
+               router.push('/workspace')
+
         setLoading(false);
       } else {
         toast.error("Invalid Credential");
@@ -67,6 +69,7 @@ const SignInForm = () => {
       const GoogleData = GoogleSign.user
        AddUser(GoogleData.displayName , GoogleData.email , "user" ,GoogleData.photoURL)
        toast.success("Signed in with Google!");
+       router.push('/workspace')
       setLoadingGoogle(false)
      }
     } catch (error) {
