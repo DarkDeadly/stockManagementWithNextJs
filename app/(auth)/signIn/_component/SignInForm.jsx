@@ -66,8 +66,7 @@ const SignInForm = () => {
       const credential = GoogleAuthProvider.credentialFromResult(GoogleSign);
       const token = credential.accessToken;
      if (GoogleSign) {
-      const GoogleData = GoogleSign.user
-       AddUser(GoogleData.displayName , GoogleData.email , "user" ,GoogleData.photoURL)
+       await AddUser(GoogleSign.user.uid , GoogleSign.user.displayName , GoogleSign.user.email , "user" , GoogleSign.user.photoURL)
        toast.success("Signed in with Google!");
        router.push('/workspace')
       setLoadingGoogle(false)

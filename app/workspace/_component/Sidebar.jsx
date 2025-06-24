@@ -39,7 +39,7 @@ const Sidebarwork = () => {
   }
   return (
     <div>
-      <Sidebar className={"h-dvh"}>
+      <Sidebar className={"h-dvh border-none"}>
         <div className="flex flex-col gap-10">
           <SidebarHeader className={"py-7"}>
             <div className="flex gap-3">

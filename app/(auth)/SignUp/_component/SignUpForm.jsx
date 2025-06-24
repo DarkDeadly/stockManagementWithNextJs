@@ -69,14 +69,13 @@ const handleRouter = () => {
     if (matchResult && validationResult && passwordValidation) {
     setLoading(true)
     const registeredCredential = await createUserWithEmailAndPassword(auth , SignUpForm.email , SignUpForm.password)
-    if (registeredCredential) {
-      AddUser(SignUpForm.username ,SignUpForm.email ,  )
+    
+      const uid = registeredCredential.user.uid;
+      await AddUser(uid, SignUpForm.username, SignUpForm.email);
       toast.success("Successfully registered")
       setLoading(false)
       router.push('./signIn')
-    }else {
-      toast.error("Failed to register")
-    }
+    
     
     }
     } catch (error) {
