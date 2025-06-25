@@ -22,7 +22,7 @@ import toast from "react-hot-toast";
 const AddProduct = () => {
   const [ProductData, setProductData] = useState({});
   const [Loading, setLoading] = useState(false);
-  const closeRef = useRef(null); // 👈 Ref for DialogClose
+  const closeRef = useRef(null); 
   const user = auth.currentUser;
 
   const handleChanges = (e) => {
@@ -38,23 +38,25 @@ const AddProduct = () => {
     try {
       if (user) {
         setLoading(true);
-        await AddProducts(
+        const ProductID = await AddProducts(
           ProductData.prodName,
           ProductData.prodPrice,
           ProductData.ProdCategory,
           ProductData.prodQuantity
         );
-        await addingProductToUser(
+        if (ProductID) {
+          await addingProductToUser(
           ProductData.prodName,
           ProductData.prodPrice,
           ProductData.ProdCategory,
           ProductData.prodQuantity,
-          user.uid
+          user.uid,
+          ProductID
         );
+        }
         toast.success("Product added successfully");
         setLoading(false);
 
-        // 👇 Programmatically close the dialog
         if (closeRef.current) closeRef.current.click();
       }
     } catch (error) {
