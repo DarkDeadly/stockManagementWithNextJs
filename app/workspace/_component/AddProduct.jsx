@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { Loader2Icon, PlusCircle } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -12,24 +12,57 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import CategorySelection from "./CategorySelection";
+import { auth } from "@/lib/config/db";
+import { addingProductToUser, AddProducts } from "@/lib/DatabasesServices/databaseApis";
+import toast from "react-hot-toast";
 
 const AddProduct = () => {
-    const [ProductData, setProductData] = useState({})
+  const [ProductData, setProductData] = useState({});
+  const [Loading, setLoading] = useState(false);
+  const closeRef = useRef(null); // 👈 Ref for DialogClose
+  const user = auth.currentUser;
 
-    const handleChanges = (e) => {
-        const {name , value} = e.target
-        setProductData((prevData) => ({
-            ...prevData , [name] : value
-        }))
-    }
+  const handleChanges = (e) => {
+    const { name, value } = e.target;
+    setProductData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(ProductData)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (user) {
+        setLoading(true);
+        await AddProducts(
+          ProductData.prodName,
+          ProductData.prodPrice,
+          ProductData.ProdCategory,
+          ProductData.prodQuantity
+        );
+        await addingProductToUser(
+          ProductData.prodName,
+          ProductData.prodPrice,
+          ProductData.ProdCategory,
+          ProductData.prodQuantity,
+          user.uid
+        );
+        toast.success("Product added successfully");
+        setLoading(false);
+
+        // 👇 Programmatically close the dialog
+        if (closeRef.current) closeRef.current.click();
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
     }
+  };
+
   return (
     <div>
       <Dialog>
@@ -46,16 +79,41 @@ const AddProduct = () => {
             </DialogDescription>
           </DialogHeader>
           <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-            <Input type={"text"} placeholder="enter product name" name = "prodName" onChange = {handleChanges}/>
-            <CategorySelection name = {"ProdCategory"} onChange = {handleChanges}/>
-            <Input type={"number"} placeholder="How many in the stock" name = "prodQuantity" onChange = {handleChanges}/>
-            <Input type = {"number"} placeholder= "enter the price " name = "prodPrice" onChange = {handleChanges}/>
+            <Input
+              required
+              type={"text"}
+              placeholder="Enter product name"
+              name="prodName"
+              onChange={handleChanges}
+            />
+            <CategorySelection name={"ProdCategory"} onChange={handleChanges} />
+            <Input
+              required
+              type={"number"}
+              placeholder="How many in stock"
+              name="prodQuantity"
+              onChange={handleChanges}
+            />
+            <Input
+              required
+              type={"number"}
+              placeholder="Enter the price"
+              name="prodPrice"
+              onChange={handleChanges}
+            />
             <DialogFooter>
-              <Button className={"cursor-pointer"} type = "submit" >Submit</Button>
+              <Button type="submit" disabled={Loading}>
+                {Loading && <Loader2Icon className="animate-spin" />} Submit
+              </Button>
               <DialogClose asChild>
-                <Button type="button" variant="secondary" className={"cursor-pointer"} >
+                <button
+                  type="button"
+                  variant="secondary"
+                  className="hidden"
+                  ref={closeRef}
+                >
                   Close
-                </Button>
+                </button>
               </DialogClose>
             </DialogFooter>
           </form>
