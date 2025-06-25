@@ -10,6 +10,11 @@ import { GetUser } from "@/lib/DatabasesServices/databaseApis";
 import { UserContext } from "@/context/UserContext";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { ProductAnalytics } from "@/lib/utils";
+import WorkSpaceCards from "./_component/WorkSpaceCards";
+import { Input } from "@/components/ui/input";
+
+import AddProduct from "./_component/AddProduct";
 
 const Workspace = () => {
   const router = useRouter();
@@ -37,6 +42,22 @@ const Workspace = () => {
 
       <div className="w-full">
         <WorkspaceHeader AuthenticatedUser={AuthenticatedUser} />
+        <div className="flex justify-center">
+          <div className="w-[95%]  grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3  my-9 gap-4 ">
+            {ProductAnalytics.map((item, index) => (
+              <WorkSpaceCards items={item} key={index} />
+            ))}
+          </div>
+        </div>
+        <div className="flex justify-center  ">
+          <div className=" flex justify-between w-[95%] bg-[#F8F8F8] p-5 rounded-xl items-center">
+            <h1 className="text-xl font-bold">Products Overview</h1>
+            <div className="flex gap-4">
+              <Input placeholder="Search Products ..." className={"px-7"} />
+              <AddProduct/>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
