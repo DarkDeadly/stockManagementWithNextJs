@@ -13,33 +13,58 @@ import { useRouter } from "next/navigation";
 import { ProductAnalytics } from "@/lib/utils";
 import WorkSpaceCards from "./_component/WorkSpaceCards";
 import { Input } from "@/components/ui/input";
-
+import 'react-loading-skeleton/dist/skeleton.css'
+import loadingAnimation from "../../public/loadigScreen.json"
 import AddProduct from "./_component/AddProduct";
 import ProductTable from "./_component/ProductTable";
+import Lottie from "lottie-react";
 
 const Workspace = () => {
   const router = useRouter();
+
+
+
+
   const { AuthenticatedUser, setAuthenticatedUser } = useContext(UserContext);
-  const [Products, setProducts] = useState()
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
+  const [loading, setLoading] = useState(true);
+  const [Products, setProducts] = useState();
+useEffect(() => {
+  let unsubscribeProducts;
+  let isMounted = true;
+
+  const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
+    if (user && isMounted) {
+      try {
         const AuthenticatedUsers = await GetUser(user.uid);
         setAuthenticatedUser(AuthenticatedUsers);
-        const product = await gettingProducts()
-        setProducts(product)
-        console.log(product)
-      } else {
-        toast.error("user not authenticated ");
-        router.push("/signIn");
+        unsubscribeProducts = gettingProducts((fetchedProducts) => {
+          setProducts(fetchedProducts);
+          setLoading(false); 
+        });
+      } catch (err) {
+        toast.error("Something went wrong");
+        setLoading(false); 
       }
-    });
+    } else {
+      router.push("/signIn");
+    }
+  });
 
-    return () => unsubscribe();
-  }, []);
+  return () => {
+    isMounted = false;
+    unsubscribeAuth();
+    if (unsubscribeProducts) unsubscribeProducts();
+  };
+}, []);
 
   return (
-    <div className="flex w-full">
+   <>
+   {loading ? (
+  <div className="w-full flex justify-center items-center h-[50%]">
+    <Lottie animationData={loadingAnimation} />
+  </div>
+) : (
+  <div className="flex w-full">
       <Sidebarwork />
       <div className="bg-[#F8FAFC] h-full">
         <SidebarTrigger className={"cursor-pointer p-5"} />
@@ -59,19 +84,18 @@ const Workspace = () => {
             <h1 className="text-xl font-bold">Products Overview</h1>
             <div className="flex gap-4">
               <Input placeholder="Search Products ..." className={"px-7"} />
-              <AddProduct/>
+              <AddProduct />
             </div>
-          
-
           </div>
-           <div className="p-5">
-            <ProductTable productData = {Products}/>
-           </div>
+          <div className="p-5">
+            <ProductTable productData={Products} />
+          </div>
         </div>
-                     
-
       </div>
     </div>
+)}
+   </>
+    
   );
 };
 

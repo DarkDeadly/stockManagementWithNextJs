@@ -25,6 +25,7 @@
     "date-fns": "^4.1.0",
     "express": "^5.1.0",
     "firebase": "^11.9.1",
+    "lottie-react": "^2.4.1",
     "lucide-react": "^0.515.0",
     "mongo": "^0.1.0",
     "mongodb": "^6.17.0",
@@ -33,6 +34,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-hot-toast": "^2.5.2",
+    "react-loading-skeleton": "^3.5.0",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {

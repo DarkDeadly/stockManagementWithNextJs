@@ -13,13 +13,27 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import ExportButton from "./ExportButton";
+import { updateProductQuantity, UpdateUserProduct } from "@/lib/DatabasesServices/databaseApis";
+import { auth } from "@/lib/config/db";
 const ProductTable = ({ productData }) => {
-
   const [ExportValue, setExportValue] = useState(0)  
+  const [Loading, setLoading] = useState(false)
+  const user = auth.currentUser
+    const handleExport = async(product) => {
+  setLoading(true)
+  if (user) {
+     if (product.productQuantity <= ExportValue) {
+    const finalQuantity = 0 
+    await updateProductQuantity(finalQuantity , product.id)
+    await UpdateUserProduct(user.uid ,product.id ,finalQuantity)
+   }else {
+    const finalQuantity = product.productQuantity  - ExportValue ;
+    await updateProductQuantity(finalQuantity , product.id)
+    await UpdateUserProduct(user.uid ,product.id ,finalQuantity)
 
-    const handleExport = (product) => {
-  console.log("Exporting product:", product);
-  console.log(ExportValue)
+   }
+  }
+  setLoading(false)
 }
 
   const handleChanges = (e) => {
@@ -48,7 +62,7 @@ const ProductTable = ({ productData }) => {
                 <TableCell>{element.productPrice} DT</TableCell>
                 <TableCell>
                   <div className={"text-right"}>
-                    <ExportButton handleEx={() => handleExport(element)} handleChanges = {handleChanges} />
+                    <ExportButton handleEx={() => handleExport(element)} handleChanges = {handleChanges} loading = {Loading} />
                   </div>
                 </TableCell>
               </TableRow>
