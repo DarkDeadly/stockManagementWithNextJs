@@ -40,16 +40,16 @@ const AddProduct = () => {
         setLoading(true);
         const ProductID = await AddProducts(
           ProductData.prodName,
-          ProductData.prodPrice,
+          Number(ProductData.prodPrice),
           ProductData.ProdCategory,
-          ProductData.prodQuantity
+          Number(ProductData.prodQuantity),
         );
         if (ProductID) {
           await addingProductToUser(
           ProductData.prodName,
-          ProductData.prodPrice,
+          Number(ProductData.prodPrice),
           ProductData.ProdCategory,
-          ProductData.prodQuantity,
+          Number(ProductData.prodQuantity),
           user.uid,
           ProductID
         );

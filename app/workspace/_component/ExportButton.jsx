@@ -13,12 +13,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2Icon } from "lucide-react";
-const ExportButton = ({handleEx , handleChanges , loading}) => {
+const ExportButton = ({handleEx , handleChanges , loading , handleIm , handleDel}) => {
   return (
     <div>
       <Dialog>
         <DialogTrigger asChild>
-        <Button className={"cursor-pointer"}>Export</Button>
+        <Button className={"cursor-pointer"}>Edit or delete</Button>
 
         </DialogTrigger>
         <DialogContent>
@@ -29,7 +29,10 @@ const ExportButton = ({handleEx , handleChanges , loading}) => {
             </DialogDescription>
           </DialogHeader>
           <Input placeholder = "how many item you want to export" type={"number"} onChange = {handleChanges}/>
-          <Button className={"cursor-pointer"} onClick={handleEx} disabled = {loading}>{loading && <Loader2Icon className="animate-spin"/>} Submit</Button>
+          <Button className={"cursor-pointer"} onClick={handleEx} disabled = {loading}>{loading && <Loader2Icon className="animate-spin"/>} Export</Button>
+          <Button className={"cursor-pointer"} onClick={handleIm} disabled = {loading}>{loading && <Loader2Icon className="animate-spin"/>} Import</Button>
+          <Button className={"cursor-pointer bg-red-500 hover:bg-red-400"} onClick = {handleDel} disabled ={loading} >{loading && <Loader2Icon className="animate-spin"/>} Delete</Button>
+
         </DialogContent>
       </Dialog>
     </div>

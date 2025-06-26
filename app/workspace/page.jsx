@@ -29,6 +29,8 @@ const Workspace = () => {
   const [loading, setLoading] = useState(true);
   const [Products, setProducts] = useState();
   const [SearchValue, setSearchValue] = useState('')
+  const [TotalProducts, setTotalProducts] = useState(0)
+
 useEffect(() => {
   let unsubscribeProducts;
   let isMounted = true;
@@ -58,8 +60,35 @@ useEffect(() => {
   };
 }, []);
 
+useEffect(() => {
+  if (!Products) return;
+
+  Products.forEach((product) => {
+    if (product.productQuantity <= 5) {
+      toast.error(`⚠️ The product "${product.productName}" is low on stock.`);
+    }
+   
+  });
+
+  const total = Products.reduce((sum, product) => sum + product.productQuantity, 0);
+  setTotalProducts(total);
+}, [Products]);
 
 
+const DynamicAnalytics = [
+  {
+    ...ProductAnalytics[0],
+    value: TotalProducts, // 🟢 total stock
+  },
+  {
+    ...ProductAnalytics[1],
+    value: Products?.filter((p) => p.productQuantity <= 5).length || 0, // 🟡 low stock count
+  },
+  {
+    ...ProductAnalytics[2],
+    value: 0, // 🔴 replace with expired item count logic
+  },
+];
 const FilteredProduct = Products?.filter((value) =>
   value.productName.toLowerCase().includes(SearchValue.toLowerCase())
 );
@@ -81,7 +110,7 @@ const FilteredProduct = Products?.filter((value) =>
         <WorkspaceHeader AuthenticatedUser={AuthenticatedUser} />
         <div className="flex justify-center">
           <div className="w-[95%]  grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3  my-9 gap-4 ">
-            {ProductAnalytics.map((item, index) => (
+            {DynamicAnalytics.map((item, index) => (
               <WorkSpaceCards items={item} key={index} />
             ))}
           </div>

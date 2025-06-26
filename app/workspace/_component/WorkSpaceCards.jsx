@@ -1,6 +1,6 @@
 import React from 'react'
 
-const WorkSpaceCards = ({items}) => {
+const WorkSpaceCards = ({items }) => {
   return (
       <div className=' flex flex-col  shadow-xl border-2 rounded-lg border-white bg-[#F8F8F8] p-3 cursor-pointer duration-300 hover:scale-105 gap-3 text-black'>
        <div className='flex gap-2 text-black'>
