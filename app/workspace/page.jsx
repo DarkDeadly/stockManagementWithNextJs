@@ -28,6 +28,7 @@ const Workspace = () => {
   const { AuthenticatedUser, setAuthenticatedUser } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
   const [Products, setProducts] = useState();
+  const [SearchValue, setSearchValue] = useState('')
 useEffect(() => {
   let unsubscribeProducts;
   let isMounted = true;
@@ -57,6 +58,12 @@ useEffect(() => {
   };
 }, []);
 
+
+
+const FilteredProduct = Products?.filter((value) =>
+  value.productName.toLowerCase().includes(SearchValue.toLowerCase())
+);
+
   return (
    <>
    {loading ? (
@@ -83,12 +90,12 @@ useEffect(() => {
           <div className=" flex justify-between  p-5  items-center">
             <h1 className="text-xl font-bold">Products Overview</h1>
             <div className="flex gap-4">
-              <Input placeholder="Search Products ..." className={"px-7"} />
+              <Input placeholder="Search Products ..." className={"px-7"}  onChange = {(e) => setSearchValue(e.target.value)}/>
               <AddProduct />
             </div>
           </div>
           <div className="p-5">
-            <ProductTable productData={Products} />
+            <ProductTable productData={FilteredProduct} />
           </div>
         </div>
       </div>
