@@ -6,7 +6,6 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import WorkspaceHeader from "./_component/WorkspaceHeader";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/config/db";
-import { gettingProducts, GetUser } from "@/lib/DatabasesServices/databaseApis";
 import { UserContext } from "@/context/UserContext";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -18,6 +17,8 @@ import loadingAnimation from "../../public/loadigScreen.json"
 import AddProduct from "./_component/AddProduct";
 import ProductTable from "./_component/ProductTable";
 import Lottie from "lottie-react";
+import { GetUser } from "@/lib/DatabasesServices/userDatabase";
+import { gettingProducts } from "@/lib/DatabasesServices/databaseApis";
 
 const Workspace = () => {
   const router = useRouter();
@@ -46,6 +47,7 @@ useEffect(() => {
         });
       } catch (err) {
         toast.error("Something went wrong");
+        console.log(err)
         setLoading(false); 
       }
     } else {
@@ -117,7 +119,7 @@ const FilteredProduct = Products?.filter((value) =>
         </div>
         <div className="flex justify-center flex-col w-[95%] bg-[#F8F8F8] m-auto rounded-xl my-5 ">
           <div className=" flex justify-between  p-5  items-center">
-            <h1 className="text-xl font-bold">Products Overview</h1>
+            <h1 className="text-xl font-bold max-[692px]:hidden">Products Overview</h1>
             <div className="flex gap-4">
               <Input placeholder="Search Products ..." className={"px-7"}  onChange = {(e) => setSearchValue(e.target.value)}/>
               <AddProduct />

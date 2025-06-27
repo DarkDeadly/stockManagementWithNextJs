@@ -3,7 +3,6 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import Image from 'next/image'
 import React, { useState } from 'react'
 import { validateEmail , PasswordVerificaiton, PasswordMatching} from '@/lib/utils'
 import {createUserWithEmailAndPassword} from "firebase/auth"
@@ -11,7 +10,7 @@ import toast from 'react-hot-toast'
 import { Loader2Icon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import {auth} from '@/lib/config/db'
-import { AddUser } from '@/lib/DatabasesServices/databaseApis'
+import { AddUser } from '@/lib/DatabasesServices/userDatabase'
 const SignUpForm = () => {
   const [SignUpForm, setSignUpForm] = useState({
     username: '',

@@ -68,7 +68,7 @@ const ProductTable = ({ productData }) => {
         <TableHeader>
           <TableRow>
             <TableHead className="w-auto">Product Name</TableHead>
-            <TableHead>Product Category</TableHead>
+            <TableHead className={"max-[971px]:hidden"}>Product Category</TableHead>
             <TableHead>Product Quantity</TableHead>
             <TableHead>Product Price</TableHead>
             <TableHead className="text-right">Actions</TableHead>
@@ -81,11 +81,11 @@ const ProductTable = ({ productData }) => {
                 <TableCell className="font-medium">
                   {element.productName}
                 </TableCell>
-                <TableCell>{element.productCategory}</TableCell>
+                <TableCell className={"max-[971px]:hidden"}>{element.productCategory}</TableCell>
                 <TableCell>{element.productQuantity}</TableCell>
                 <TableCell>{element.productPrice} DT</TableCell>
-                <TableCell>
-                  <div className={"text-right"}>
+                <TableCell className={"text-right"}>
+                  
                     <ExportButton
                       handleEx={() => handleExport(element)}
                       handleChanges={handleChanges}
@@ -93,7 +93,7 @@ const ProductTable = ({ productData }) => {
                       handleIm = {() => handleImport(element)}
                       handleDel = {() => handleDelete(element)}
                     />
-                  </div>
+                  
                 </TableCell>
               </TableRow>
             ))}

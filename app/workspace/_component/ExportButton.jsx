@@ -18,7 +18,7 @@ const ExportButton = ({handleEx , handleChanges , loading , handleIm , handleDel
     <div>
       <Dialog>
         <DialogTrigger asChild>
-        <Button className={"cursor-pointer"}>Edit or delete</Button>
+        <Button className={"cursor-pointer"}>Edit/delete</Button>
 
         </DialogTrigger>
         <DialogContent>
