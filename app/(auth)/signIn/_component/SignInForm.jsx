@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { auth, provider } from "@/lib/config/db";
-import { AddUser } from "@/lib/DatabasesServices/databaseApis";
+import { AddUser } from "@/lib/DatabasesServices/userDatabase";
 import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,

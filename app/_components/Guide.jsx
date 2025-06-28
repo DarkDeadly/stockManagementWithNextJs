@@ -5,7 +5,7 @@ import Guideitems from './Guideitems'
 const Guide = () => {
   return (
     <div>
-         <div className='text-center p-10'>
+         <div className='text-center p-10' data-aos="fade-down">
             <h2 className='text-5xl font-medium font-serif pb-2'>How It Works</h2>
             <p className='text-xl text-gray-500 font-semibold'>Get started in three simple steps</p>
         </div>

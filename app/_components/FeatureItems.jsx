@@ -3,7 +3,7 @@ import React from 'react'
 const FeatureItems = ({element}) => {
     const Icon = element.icons
   return (
-    <div className='shadow-2xl border-2 rounded-lg border-gray-400 bg-white p-7 cursor-pointer duration-300 hover:scale-110'>
+    <div className='shadow-2xl border-2 rounded-lg border-gray-400 bg-white p-7 cursor-pointer duration-300 hover:scale-110' data-aos="fade-up">
         <div className='w-12 h-12 '>
             <Icon size={35} />
         </div>
