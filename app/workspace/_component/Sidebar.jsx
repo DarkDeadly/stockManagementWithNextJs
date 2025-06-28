@@ -9,7 +9,6 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import { SidebarItems } from "@/lib/utils";
@@ -21,9 +20,18 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Loader2Icon } from "lucide-react";
 
-const Sidebarwork = () => {
+const Sidebarwork = ({User}) => {
   const [Loading, setLoading] = useState(false)
   const router = useRouter()
+  console.log(User)
+  const filtereSidebarItems = SidebarItems.filter(item => {
+    if (item.roles) {
+      return item.roles.includes(User?.role)
+    }
+     return true;
+  } )
+console.log("Filtered sidebar items:", filtereSidebarItems);
+
   const HandleSignOut = async() => {
     try {
       setLoading(true)
@@ -50,7 +58,7 @@ const Sidebarwork = () => {
 
           <SidebarContent>
             <SidebarMenu>
-              {SidebarItems.map((item, index) => (
+              {filtereSidebarItems.map((item, index) => (
                 <SidebarMenuItem key={index}>
                   <SidebarMenuButton asChild className="flex gap-2 items-center pl-7">
                     <Link href={item.url} className="flex gap-2 py-7 items-center text-xl font-light font-serif">

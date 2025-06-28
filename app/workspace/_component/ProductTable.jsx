@@ -19,7 +19,7 @@ import {
 } from "@/lib/DatabasesServices/databaseApis";
 import { auth } from "@/lib/config/db";
 import toast from "react-hot-toast";
-const ProductTable = ({ productData }) => {
+const ProductTable = ({ productData , authenticatedUser}) => {
   const [ExportValue, setExportValue] = useState(0);
   const [Loading, setLoading] = useState(false);
   const user = auth.currentUser;
@@ -71,7 +71,7 @@ const ProductTable = ({ productData }) => {
             <TableHead className={"max-[971px]:hidden"}>Product Category</TableHead>
             <TableHead>Product Quantity</TableHead>
             <TableHead>Product Price</TableHead>
-            <TableHead className="text-right">Actions</TableHead>
+            {["admin", "boss"].includes(authenticatedUser?.role) && <TableHead className="text-right">Actions</TableHead>}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -86,13 +86,13 @@ const ProductTable = ({ productData }) => {
                 <TableCell>{element.productPrice} DT</TableCell>
                 <TableCell className={"text-right"}>
                   
-                    <ExportButton
+                   {["admin", "boss"].includes(authenticatedUser?.role) &&  <ExportButton
                       handleEx={() => handleExport(element)}
                       handleChanges={handleChanges}
                       loading={Loading}
                       handleIm = {() => handleImport(element)}
                       handleDel = {() => handleDelete(element)}
-                    />
+                    />}
                   
                 </TableCell>
               </TableRow>

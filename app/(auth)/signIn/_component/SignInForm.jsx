@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { auth, provider } from "@/lib/config/db";
-import { AddUser } from "@/lib/DatabasesServices/userDatabase";
+import { handleGoogleSignIn } from "@/lib/DatabasesServices/userDatabase";
 import {
   GoogleAuthProvider,
   signInWithEmailAndPassword,
@@ -60,27 +60,29 @@ const SignInForm = () => {
     }
   };
   const googleHandle = async () => {
-    try {
-      setLoadingGoogle(true)
-      const GoogleSign = await signInWithPopup(auth, provider);
-      const credential = GoogleAuthProvider.credentialFromResult(GoogleSign);
-      const token = credential.accessToken;
-     if (GoogleSign) {
-       await AddUser(GoogleSign.user.uid , GoogleSign.user.displayName , GoogleSign.user.email , "user" , GoogleSign.user.photoURL)
-       toast.success("Signed in with Google!");
-       router.push('/workspace')
-      setLoadingGoogle(false)
-     }
-    } catch (error) {
-      console.log(error.code);
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-    }
-  };
+  try {
+    setLoadingGoogle(true);
+
+    const GoogleSign = await signInWithPopup(auth, provider);
+
+    if (!GoogleSign?.user) throw new Error("Google sign-in failed.");
+
+    await handleGoogleSignIn(GoogleSign.user);
+
+    toast.success("Signed in with Google!"); // show toast first
+
+    // Wait a moment before navigating
+    setTimeout(() => {
+      router.push("/workspace");
+    }, 500); // 0.5s delay for toast visibility
+
+  } catch (error) {
+    console.error(error.code || error.message);
+    toast.error("Google Sign-In failed");
+  } finally {
+    setLoadingGoogle(false);
+  }
+};
   return (
     <div className="w-[80%] rounded-xl bg-white shadow-2xl max-[524px]:w-[100%] mt-5">
       <h2 className="text-center font-bold text-2xl py-5">Welcome Back</h2>
