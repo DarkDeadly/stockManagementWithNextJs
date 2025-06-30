@@ -25,7 +25,7 @@ const Header = () => {
       <div className="flex items-center justify-between p-5">
         <div className="flex items-center gap-5">
           <Image src={"/logo.svg"} alt="Logo" height={40} width={40} />
-          <h1 className="font-bold text-2xl">StockMaster</h1>
+          <h1 className="font-bold text-2xl">InventoryPro</h1>
         </div>
 
         {/* Desktop Menu */}

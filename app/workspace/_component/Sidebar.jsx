@@ -24,12 +24,15 @@ const Sidebarwork = ({User}) => {
   const [Loading, setLoading] = useState(false)
   const router = useRouter()
   console.log(User)
-  const filtereSidebarItems = SidebarItems.filter(item => {
-    if (item.roles) {
-      return item.roles.includes(User?.role)
-    }
-     return true;
-  } )
+  const filtereSidebarItems = User
+  ? SidebarItems.filter(item => {
+      if (item.roles) {
+        return item.roles.includes(User.role);
+      }
+      return true;
+    })
+  : [];
+  console.log(User.role)
 console.log("Filtered sidebar items:", filtereSidebarItems);
 
   const HandleSignOut = async() => {

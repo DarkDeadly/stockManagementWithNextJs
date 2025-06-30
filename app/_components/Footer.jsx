@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="flex flex-col gap-3 ">
         <div className="flex items-center gap-3">
           <Image src={"/logonight.svg"} alt="logo" height={30} width={30} />
-          <h1 className="font-bold text-2xl text-white">StockMaster</h1>
+          <h1 className="font-bold text-2xl text-white">Inventory Pro</h1>
         </div>
         <p className="text-gray-400">Streamline your inventory management with powerful tools and insights.</p>
       </div>
@@ -25,7 +25,7 @@ const Footer = () => {
         <p className="hover:text-white cursor-pointer">Careers</p>
       </div>
       </div>
-      <p className="text-bold text-white text-center py-5">© 2025 StockMaster. All rights reserved by Anis Omri.</p>
+      <p className="text-bold text-white text-center py-5">© 2025 Inventory Pro. All rights reserved by Anis Omri.</p>
     </div>
   );
 };

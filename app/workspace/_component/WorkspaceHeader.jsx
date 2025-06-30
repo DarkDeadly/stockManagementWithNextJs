@@ -8,7 +8,7 @@ const WorkspaceHeader = ({ AuthenticatedUser }) => {
   return (
     <div className="flex justify-between p-3 border-b-2 ">
       <div className = 'max-[606px]:hidden'>
-        <h1 className="text-2xl font-bold">welcome {AuthenticatedUser.username || "Loading UserName"} to StockMaster</h1>
+        <h1 className="text-2xl font-bold">welcome {AuthenticatedUser.username || "Loading UserName"} to InventoryPro</h1>
         <p className="text-gray-600 text-xl pt-2"> today : {formattedDate}</p>
       </div>
       <div className="flex gap-2 items-center ">

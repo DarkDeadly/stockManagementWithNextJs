@@ -19,6 +19,7 @@ import {
 } from "@/lib/DatabasesServices/databaseApis";
 import { auth } from "@/lib/config/db";
 import toast from "react-hot-toast";
+import { AddExportData } from "@/lib/DatabasesServices/ExportedProduct";
 const ProductTable = ({ productData , authenticatedUser}) => {
   const [ExportValue, setExportValue] = useState(0);
   const [Loading, setLoading] = useState(false);
@@ -36,6 +37,8 @@ const ProductTable = ({ productData , authenticatedUser}) => {
     setLoading(true)
     await deleteProduct(product.id)
     await deleteUserProduct(product.id ,user.uid)
+    await AddExportData(product.productName , user.uid)
+
     toast.success('delete complete')
     setLoading(false)
 
@@ -49,6 +52,7 @@ const ProductTable = ({ productData , authenticatedUser}) => {
         await UpdateUserProduct(user.uid, product.id, finalQuantity);
         await deleteProduct(product.id)
         await deleteUserProduct(product.id ,user.uid)
+        await AddExportData(product.productName , user.uid)
       } else {
         const finalQuantity = product.productQuantity - Number(ExportValue);
         await updateProductQuantity(finalQuantity, product.id);
