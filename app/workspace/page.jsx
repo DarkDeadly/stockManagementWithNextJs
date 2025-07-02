@@ -19,15 +19,23 @@ import ProductTable from "./_component/ProductTable";
 import Lottie from "lottie-react";
 import { GetUser } from "@/lib/DatabasesServices/userDatabase";
 import { gettingProducts } from "@/lib/DatabasesServices/databaseApis";
+import { GetExportedDatas } from "@/lib/DatabasesServices/ExportedProduct";
+import { AnalyticsContext } from "@/context/AnalyticsContext";
 
 const Workspace = () => {
   const router = useRouter();
 
   const { AuthenticatedUser, setAuthenticatedUser } = useContext(UserContext);
+  const {Analytics, setAnalytics} = useContext(AnalyticsContext)
   const [loading, setLoading] = useState(true);
   const [Products, setProducts] = useState();
   const [SearchValue, setSearchValue] = useState("");
   const [TotalProducts, setTotalProducts] = useState(0);
+  const [ExportedProducts, setExportedProducts] = useState()
+
+
+
+
   useEffect(() => {
     let unsubscribeProducts;
     let isMounted = true;
@@ -73,7 +81,11 @@ const Workspace = () => {
     );
     setTotalProducts(total);
   }, [Products]);
+ useEffect(() => {
+  const unsubscribe = GetExportedDatas(setExportedProducts);
 
+  return () => unsubscribe();
+}, []);
   const DynamicAnalytics = [
     {
       ...ProductAnalytics[0],
@@ -85,13 +97,21 @@ const Workspace = () => {
     },
     {
       ...ProductAnalytics[2],
-      value: 0,
+      value: ExportedProducts && ExportedProducts.length ,
     },
   ];
   const FilteredProduct = Products?.filter((value) =>
     value.productName.toLowerCase().includes(SearchValue.toLowerCase())
   );
+  useEffect(() => {
+  const newAnalytics = [
+    { ...ProductAnalytics[0], value: TotalProducts },
+    { ...ProductAnalytics[1], value: Products?.filter((p) => p.productQuantity <= 5).length || 0 },
+    { ...ProductAnalytics[2], value: ExportedProducts?.length || 0 },
+  ];
 
+  setAnalytics(newAnalytics); 
+}, [TotalProducts, Products, ExportedProducts]);
   return (
     <>
       {loading ? (
@@ -134,7 +154,7 @@ const Workspace = () => {
                   )}
                 </div>
               </div>
-              <div className="p-5">
+              <div className="p-5 overflow-x-auto">
                 <ProductTable
                   productData={FilteredProduct}
                   authenticatedUser={AuthenticatedUser}
